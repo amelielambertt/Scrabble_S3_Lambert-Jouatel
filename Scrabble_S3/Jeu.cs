@@ -257,7 +257,9 @@ namespace Scabble_JOUATEL
             bool SURLEPLATEAU = false;
             List<int> alignementReferencex = new List<int>();
             List<int> alignementReferencey = new List<int>();
-            for(int i = 0; i < 15; i++)
+            List<int> alignementReferencexTemporaire = new List<int>();
+            List<int> alignementReferenceyTemporaire = new List<int>();
+            for (int i = 0; i < 15; i++)
             {
                 for(int j = 0; j < 15; j++)
                 {
@@ -265,6 +267,7 @@ namespace Scabble_JOUATEL
                     if (l != '3' && l!= '2' && l != '4' && l != '7' && l != '8' && l != '_')
                     {
                         alignementReferencey.Add(j);
+                        alignementReferenceyTemporaire.Add(j);
                     }
                 }
             }
@@ -276,6 +279,7 @@ namespace Scabble_JOUATEL
                     if (l != '3' && l != '2' && l != '4' && l != '7' && l != '8' && l != '_')
                     {
                         alignementReferencex.Add(j);
+                        alignementReferencexTemporaire.Add(j);
                     }
                 }
             }
@@ -296,8 +300,10 @@ namespace Scabble_JOUATEL
 
                 Console.Clear();
                 Console.WriteLine("Tour de : " + joueurJouant.Nom);
-                int laCouleurDeLaRéponseDeLaVie = this.MonPlateau.LaFonctionQuiMePerdra(plateauFactice, curseurx, curseury, alignementReferencex, alignementReferencey);
+                int laCouleurDeLaRéponseDeLaVie = this.MonPlateau.LaFonctionQuiMePerdra(plateauFactice, curseurx, curseury, alignementReferencexTemporaire, alignementReferenceyTemporaire);
                 Affichage902IQ(joueurJouant.Main, optionSelectionnée, compteurDeTour, plateauCurseur, plateauFactice, curseurx, curseury, SURLEPLATEAU, laCouleurDeLaRéponseDeLaVie, "Placez les lettres souhaitées sur le plateau"); // Afficher le menu
+
+
 
                 cki = Console.ReadKey(); // cki contient entre autres le code de la
 
@@ -337,7 +343,79 @@ namespace Scabble_JOUATEL
                             if(laCouleurDeLaRéponseDeLaVie != 2)
                             {
                                 plateauFactice[curseurx, curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
+                                //ajouter les lettres adjacentes au plateau factice (donc c'est pas grave si on l'efface)
+                                bool lettreAdjacenteTrouvée = true;
+                                int deuxiemeCurseurx = curseurx;
+                                int deuxiemeCurseury = curseury;
+                                while (lettreAdjacenteTrouvée) //chercher à en haut
+                                {
+                                    lettreAdjacenteTrouvée = false; //on estime qu'on ne trouve pas la lettre
+                                    if (deuxiemeCurseurx != 0) // Si on n'arrive pas en bordure de plateau
+                                    {
+                                        deuxiemeCurseurx -= 1; // On peut vérifier la case au dessus
+                                        char l = this.MonPlateau.Plato[deuxiemeCurseurx, curseury]; // simplification du if en dessous
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*') //si la case au dessus est une lettre
+                                            plateauFactice[deuxiemeCurseurx, curseury] = this.MonPlateau.Plato[deuxiemeCurseurx, curseury]; // on ajoute cette lettre au plateau factice pour la retenir
+                                        lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                    }
+                                }
+                                deuxiemeCurseurx = curseurx;
+                                while (lettreAdjacenteTrouvée) //chercher à en bas
+                                {
+                                    lettreAdjacenteTrouvée = false; //on estime qu'on ne trouve pas la lettre
+                                    if (deuxiemeCurseurx != 14) // Si on n'arrive pas en bordure de plateau
+                                    {
+                                        deuxiemeCurseurx += 1; // On peut vérifier la case en dessous
+                                        char l = this.MonPlateau.Plato[deuxiemeCurseurx, curseury]; // simplification du if en dessous
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*') //si la case au dessus est une lettre
+                                            plateauFactice[deuxiemeCurseurx, curseury] = this.MonPlateau.Plato[deuxiemeCurseurx, curseury]; // on ajoute cette lettre au plateau factice pour la retenir
+                                        lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                    }
+                                }
+                                while (lettreAdjacenteTrouvée) //chercher à gauche
+                                {
+                                    lettreAdjacenteTrouvée = false; //on estime qu'on ne trouve pas la lettre
+                                    if (deuxiemeCurseury != 0) // Si on n'arrive pas en bordure de plateau
+                                    {
+                                        deuxiemeCurseury -= 1; // On peut vérifier la case au dessus
+                                        char l = this.MonPlateau.Plato[curseurx, deuxiemeCurseury]; // simplification du if en dessous
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*') //si la case au dessus est une lettre
+                                            plateauFactice[curseurx, deuxiemeCurseury] = this.MonPlateau.Plato[curseurx, deuxiemeCurseury]; // on ajoute cette lettre au plateau factice pour la retenir
+                                        lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                    }
+                                }
+                                deuxiemeCurseury = curseury;
+                                while (lettreAdjacenteTrouvée) //chercher à droite
+                                {
+                                    lettreAdjacenteTrouvée = false; //on estime qu'on ne trouve pas la lettre
+                                    if (deuxiemeCurseury != 14) // Si on n'arrive pas en bordure de plateau
+                                    {
+                                        deuxiemeCurseury += 1; // On peut vérifier la case en dessous
+                                        char l = this.MonPlateau.Plato[curseurx, deuxiemeCurseury]; // simplification du if en dessous
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*') //si la case au dessus est une lettre
+                                            plateauFactice[curseurx, deuxiemeCurseury] = this.MonPlateau.Plato[curseurx, deuxiemeCurseury]; // on ajoute cette lettre au plateau factice pour la retenir
+                                        lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                    }
+                                }
+                                // Le plateauFactice contient désormais l'arbre de tous les mots reliés à celui que le joueur est en train de placer
+
+                                
+
+
+
+
+
+
                                 joueurJouant.Main.RemoveAt(optionSelectionnée);
+                                if(alignementReferencexTemporaire.Contains(curseurx) && !alignementReferenceyTemporaire.Contains(curseury))
+                                {
+                                    alignementReferenceyTemporaire.Clear();
+                                }
+
+                                if (alignementReferenceyTemporaire.Contains(curseury) && !alignementReferencexTemporaire.Contains(curseurx))
+                                {
+                                    alignementReferencexTemporaire.Clear();
+                                }
                                 SURLEPLATEAU = false;
                                 optionSelectionnée = 0;
                             }
@@ -396,8 +474,155 @@ namespace Scabble_JOUATEL
                             }
                             indexactuel = -1;
                             break;
-                        default:
+                        case ConsoleKey.Enter:
                             // Valider le mot
+                            List<char[]> tousLesMotsTrouvés = new List<char[]>();
+                            if (alignementReferencexTemporaire.Count == 0)
+                            {
+                                for (int i = 0; i < 15; i++)
+                                {
+                                    List<char> motTrouvé = new List<char>();
+                                    for(int j = 0; j < 15; j++)
+                                    {
+                                        char l = plateauFactice[j,i];
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                            motTrouvé.Add(l);
+                                        else
+                                        {
+                                            if (motTrouvé.Count > 1)
+                                            {
+                                                char[] motAjouté = motTrouvé.ToArray();
+                                                tousLesMotsTrouvés.Add(motAjouté);
+                                            }
+                                            motTrouvé.Clear();
+                                        }
+                                    }
+                                }
+                                List<char> motTrouvéy = new List<char>();
+                                for (int j = 0; j < 14; j++)
+                                {
+                                    char l = plateauFactice[curseurx, j];
+                                    if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                        motTrouvéy.Add(l);
+                                    else
+                                    {
+                                        if (motTrouvéy.Count > 1)
+                                        {
+                                            char[] motAjouté = motTrouvéy.ToArray();
+                                            tousLesMotsTrouvés.Add(motAjouté);
+                                        }
+                                        motTrouvéy.Clear();
+                                    }
+                                }
+                            }
+                            else if(alignementReferenceyTemporaire.Count == 0)
+                            {
+                                for (int i = 0; i < 15; i++)
+                                {
+                                    List<char> motTrouvé = new List<char>();
+                                    for (int j = 0; j < 14; j++)
+                                    {
+                                        char l = plateauFactice[i, j];
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                            motTrouvé.Add(l);
+                                        else
+                                        {
+                                            if (motTrouvé.Count > 1)
+                                            {
+                                                char[] motAjouté = motTrouvé.ToArray();
+                                                tousLesMotsTrouvés.Add(motAjouté);
+                                            }
+                                            motTrouvé.Clear();
+                                        }
+                                    }
+                                }
+                                Console.WriteLine(tousLesMotsTrouvés.Count);
+                                List<char> motTrouvéx = new List<char>();
+                                for (int j = 0; j < 14; j++)
+                                {
+                                    char l = plateauFactice[j, curseury];
+                                    if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                        motTrouvéx.Add(l);
+                                    else
+                                    {
+                                        if (motTrouvéx.Count > 1)
+                                        {
+                                            char[] motAjouté = motTrouvéx.ToArray();
+                                            tousLesMotsTrouvés.Add(motAjouté);
+                                        }
+                                        motTrouvéx.Clear();
+                                    }
+                                }
+                                Console.WriteLine(tousLesMotsTrouvés.Count);
+                            }
+                            else
+                            {
+                                for (int i = 0; i < 15; i++)
+                                {
+                                    List<char> motTrouvé = new List<char>();
+                                    for (int j = 0; j < 14; j++)
+                                    {
+                                        char l = plateauFactice[j, i];
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                            motTrouvé.Add(l);
+                                        else
+                                        {
+                                            if (motTrouvé.Count > 1)
+                                            {
+                                                char[] motAjouté = motTrouvé.ToArray();
+                                                tousLesMotsTrouvés.Add(motAjouté);
+                                            }
+                                            motTrouvé.Clear();
+                                        }
+                                    }
+                                }
+                                Console.WriteLine(tousLesMotsTrouvés.Count);
+                                for (int i = 0; i < 15; i++)
+                                {
+                                    List<char> motTrouvé = new List<char>();
+                                    for (int j = 0; j < 14; j++)
+                                    {
+                                        char l = plateauFactice[i, j];
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                            motTrouvé.Add(l);
+                                        else
+                                        {
+                                            if (motTrouvé.Count > 1)
+                                            {
+                                                char[] motAjouté = motTrouvé.ToArray();
+                                                tousLesMotsTrouvés.Add(motAjouté);
+                                            }
+                                            motTrouvé.Clear();
+                                        }
+                                    }
+                                }
+                                Console.WriteLine(tousLesMotsTrouvés.Count);
+                            }
+                            bool validateur = true;
+
+                            
+
+
+                            List<string> tousLesMotsValides = new List<string>();
+                            foreach(char[] mot in tousLesMotsTrouvés)
+                            {
+                                string inter2 = new string(mot);
+                                if (MonDico.RechDichoRecursif(inter2))
+                                {
+                                    Console.WriteLine(inter2 + " est un mot valide.");
+                                    tousLesMotsValides.Add(inter2);
+                                }
+                                else
+                                {
+                                    validateur = false;
+                                    Console.WriteLine(inter2 + " n'est pas un mot valide");
+                                }
+                            }
+                            Console.ReadKey();
+
+
+
+
                             break;
                     }
                 }
