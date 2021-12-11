@@ -15,7 +15,7 @@ namespace Scabble_JOUATEL
         bool estIA;
 
 
-        public bool EstIA. //propriétés - définition des accès en consultation
+        public bool EstIA //propriétés - définition des accès en consultation
         {
             get { return this.estIA; }
         }

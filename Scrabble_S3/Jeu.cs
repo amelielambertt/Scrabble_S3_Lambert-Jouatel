@@ -20,9 +20,7 @@ namespace Scabble_JOUATEL
         {
             this.MonDico = new Dictionnaire();
             this.MonPlateau = new Plateau();
-            Sac_Jetons Partie1 = new Sac_Jetons();
-            this.MonSacDeJetons = Partie1;
-
+            this.MonSacDeJetons = new Sac_Jetons();
             int[] joueurs = Jeu.setupJoueurs(); // Grâce à ce nouveau menu, on connait la nature des quatre joueurs (on a forcé l'existance du premier joueur)
             List<Joueur> listeDesJoueurs = new List<Joueur>();
             for (int i = 0; i < joueurs.Length; i++)
@@ -71,7 +69,7 @@ namespace Scabble_JOUATEL
             {
                 for (int i = 0; i < 7; i++)  //Remplir la main de tous les joueurs avec 7 jetons puis les retirer du sac
                 {
-                    participant.Add_Main_Courante(Partie1.retire_Jeton());
+                    participant.Add_Main_Courante(this.MonSacDeJetons.retire_Jeton());
                 }
                 // Console.WriteLine(participant.ToString()); Afficher les participants pour les tests
             }
@@ -217,24 +215,27 @@ namespace Scabble_JOUATEL
             Console.WriteLine('\t' + "Tour : " + compteurDeTour);
             this.MonPlateau.AffichageOMG(this.ListeDesJoueurs);
             Thread.Sleep(1000);
-            int continuerLaPartie = 0;
+            bool continuerLaPartie = true;
+            bool quitter = false;
             do
             {
                 foreach (Joueur joueur in this.ListeDesJoueurs)
                 {
-                    continuerLaPartie = this.TourDUnJoueur(joueur, compteurDeTour);
+                    continuerLaPartie = this.TourDUnJoueur(joueur, compteurDeTour, continuerLaPartie);
                 }
                 compteurDeTour++;
-            } while (QuitterLaPartie(ListeDesJoueurs));
-
-            // Boucler et faire quitter la partie
+                Console.WriteLine(continuerLaPartie);
+                if (!continuerLaPartie)
+                    quitter = true;
+                else
+                    quitter = choixQuitter();
+            } while (!quitter);
+            QuitterLaPartie(ListeDesJoueurs);
         }
 
-        public int TourDUnJoueur(Joueur joueurJouant, int compteurDeTour)
+        public bool TourDUnJoueur(Joueur joueurJouant, int compteurDeTour, bool continuerLaPartie)
         {
             Console.WriteLine();
-
-            // Créer un plateau factice
 
             char[,] plateauCurseur = new char[15,15];
             char[,] plateauFactice = new char[15, 15];
@@ -302,7 +303,6 @@ namespace Scabble_JOUATEL
                 Console.WriteLine("Tour de : " + joueurJouant.Nom);
                 int laCouleurDeLaRéponseDeLaVie = this.MonPlateau.LaFonctionQuiMePerdra(plateauFactice, curseurx, curseury, alignementReferencexTemporaire, alignementReferenceyTemporaire);
                 Affichage902IQ(joueurJouant.Main, optionSelectionnée, compteurDeTour, plateauCurseur, plateauFactice, curseurx, curseury, SURLEPLATEAU, laCouleurDeLaRéponseDeLaVie, "Placez les lettres souhaitées sur le plateau"); // Afficher le menu
-
 
 
                 cki = Console.ReadKey(); // cki contient entre autres le code de la
@@ -536,7 +536,6 @@ namespace Scabble_JOUATEL
                                         }
                                     }
                                 }
-                                Console.WriteLine(tousLesMotsTrouvés.Count);
                                 List<char> motTrouvéx = new List<char>();
                                 for (int j = 0; j < 14; j++)
                                 {
@@ -553,7 +552,6 @@ namespace Scabble_JOUATEL
                                         motTrouvéx.Clear();
                                     }
                                 }
-                                Console.WriteLine(tousLesMotsTrouvés.Count);
                             }
                             else
                             {
@@ -576,7 +574,6 @@ namespace Scabble_JOUATEL
                                         }
                                     }
                                 }
-                                Console.WriteLine(tousLesMotsTrouvés.Count);
                                 for (int i = 0; i < 15; i++)
                                 {
                                     List<char> motTrouvé = new List<char>();
@@ -596,11 +593,10 @@ namespace Scabble_JOUATEL
                                         }
                                     }
                                 }
-                                Console.WriteLine(tousLesMotsTrouvés.Count);
                             }
                             bool validateur = true;
 
-                            
+
 
 
                             List<string> tousLesMotsValides = new List<string>();
@@ -618,9 +614,51 @@ namespace Scabble_JOUATEL
                                     Console.WriteLine(inter2 + " n'est pas un mot valide");
                                 }
                             }
-                            Console.ReadKey();
+                            Thread.Sleep(2000);
 
+                            if (validateur)
+                            {
+                                confirmation = 0;
+                                for (int i = 0; i < 15; i++)
+                                {
+                                    for (int j = 0; j < 15; j++)
+                                    {
+                                        int scoreDuMot = 0;
+                                        bool motCompteDouble = false;
+                                        bool motCompteTriple = false;
+                                        char l = plateauFactice[i, j];
+                                        char L = this.MonPlateau.Plato[i, j];
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                        {
+                                            if (L != l)
+                                            {
+                                                if (L == 3)
+                                                    motCompteTriple = true;
+                                                else if (L == 2)
+                                                    motCompteDouble = true;
+                                                else if (L == 8)
+                                                    scoreDuMot += Jetons.trouverLaValeur(l) * 2;
+                                                else if (L == 7)
+                                                    scoreDuMot += Jetons.trouverLaValeur(l) * 3;
+                                                else
+                                                    scoreDuMot += Jetons.trouverLaValeur(l);
+                                                this.MonPlateau.Plato[i, j] = l;
+                                            }
+                                        }
+                                    }
+                                }
+                                while (joueurJouant.Main.Count < 7 && this.MonSacDeJetons.pioche.Count > 0)
+                                {
+                                    joueurJouant.Add_Main_Courante(this.MonSacDeJetons.retire_Jeton());
+                                }
+                                Console.WriteLine(this.MonSacDeJetons.pioche.Count);
+                                if (this.MonSacDeJetons.pioche.Count == 0)
+                                {
+                                    continuerLaPartie = false;
+                                }
+                            }
 
+                            
 
 
                             break;
@@ -629,7 +667,7 @@ namespace Scabble_JOUATEL
 
                 
             }
-            return confirmation;
+            return continuerLaPartie;
         }
 
 
@@ -671,9 +709,7 @@ namespace Scabble_JOUATEL
             }
             Console.WriteLine();
         }
-
-
-        public bool QuitterLaPartie(List<Joueur> listeDesJoueurs)
+        public bool choixQuitter()
         {
             bool oui = true;
             bool choisi = false;
@@ -728,139 +764,138 @@ namespace Scabble_JOUATEL
                 }
 
             }
+            return !oui;
+        }
 
-            if (!oui)
+        public void QuitterLaPartie(List<Joueur> listeDesJoueurs)
+        {
+            // Décision de quitter la partie
+            Console.WriteLine("Veuillez entrer le nom de votre fichier de sauvegarde :");
+            string nomSauv = Console.ReadLine();
+
+            #region savePlateau
+            string[] savePlateau = new string[15];
+            string mem = "";
+            for(int i = 0; i < 15; i++)
             {
-                // Décision de quitter la partie
-                Console.WriteLine("Veuillez entrer le nom de votre fichier de sauvegarde :");
-                string nomSauv = Console.ReadLine();
-
-                #region savePlateau
-                string[] savePlateau = new string[15];
-                string mem = "";
-                for(int i = 0; i < 15; i++)
+                for(int j = 0; j < 15; j++)
                 {
-                    for(int j = 0; j < 15; j++)
-                    {
-                        string intermediaire = Convert.ToString(this.MonPlateau.Plato[i, j]);
-                        if (j == 14)
-                            mem += intermediaire;
-                        else
-                            mem += intermediaire + ";";
-                    }
-                    savePlateau[i] = mem;
-                    Console.WriteLine();
-                    mem = "";
+                    string intermediaire = Convert.ToString(this.MonPlateau.Plato[i, j]);
+                    if (j == 14)
+                        mem += intermediaire;
+                    else
+                        mem += intermediaire + ";";
                 }
-                using (StreamWriter sw = new StreamWriter(nomSauv + "-Plateau.txt"))
-                {
-                    foreach (string s in savePlateau)
-                    {
-                        sw.WriteLine(s);
-                    }
-                }
-                #endregion
-                #region saveJoueurs
-                int tailleDeLaSave = 3 * listeDesJoueurs.Count;
-                string[] saveJoueurs = new string[tailleDeLaSave];
-                int compteur = 0;
-                foreach(Joueur joueur in listeDesJoueurs)
-                {
-                    saveJoueurs[compteur] = joueur.Nom + ';' + joueur.Score + ';' + joueur.EstIA;
-                    compteur++;
-                    mem = "";
-                    for (int i = 0; i < joueur.MotsTrouvés.Count; i++)
-                    {
-                        if (i == joueur.MotsTrouvés.Count - 1)
-                            mem += joueur.MotsTrouvés[i];
-                        else
-                            mem += joueur.MotsTrouvés[i] + ";";
-                    }
-                    saveJoueurs[compteur] = mem;
-                    compteur++;
-                    mem = "";
-                    for(int i = 0; i < joueur.Main.Count; i++)
-                    {
-                        string intermediaire = Convert.ToString(joueur.Main[i].Lettre);
-                        string intermediaire2 = Convert.ToString(joueur.Main[i].Valeur);
-                        if(i== joueur.Main.Count - 1)
-                            mem += intermediaire + ";" + intermediaire2;
-                        else
-                            mem += intermediaire + ";" + intermediaire2 + ";";
-                    }
-                    saveJoueurs[compteur] = mem;
-                    compteur++;
-                }
-                using (StreamWriter sw = new StreamWriter(nomSauv + "-Joueurs.txt"))
-                {
-                    foreach (string s in saveJoueurs)
-                    {
-                        sw.WriteLine(s);
-                    }
-                }
-
-                #endregion
-                #region saveJetons
+                savePlateau[i] = mem;
+                Console.WriteLine();
                 mem = "";
-                string mem2 = "";
-                foreach(Jetons jeton in this.MonSacDeJetons.pioche)
+            }
+            using (StreamWriter sw = new StreamWriter(nomSauv + "-Plateau.txt"))
+            {
+                foreach (string s in savePlateau)
                 {
-                    string intermediaire = Convert.ToString(jeton.Lettre);
-                    string intermediaire2 = Convert.ToString(jeton.Valeur);
-                    mem += intermediaire + ";";
-                    mem2 += intermediaire2 + ";";
+                    sw.WriteLine(s);
                 }
-                mem = mem.Remove(mem.Length - 1);
-                mem2 = mem2.Remove(mem2.Length - 1);
-                using (StreamWriter sw = new StreamWriter(nomSauv + "-Jetons.txt"))
+            }
+            #endregion
+            #region saveJoueurs
+            int tailleDeLaSave = 3 * listeDesJoueurs.Count;
+            string[] saveJoueurs = new string[tailleDeLaSave];
+            int compteur = 0;
+            foreach(Joueur joueur in listeDesJoueurs)
+            {
+                saveJoueurs[compteur] = joueur.Nom + ';' + joueur.Score + ';' + joueur.EstIA;
+                compteur++;
+                mem = "";
+                for (int i = 0; i < joueur.MotsTrouvés.Count; i++)
                 {
-                    sw.WriteLine(mem);
-                    sw.WriteLine(mem2);
+                    if (i == joueur.MotsTrouvés.Count - 1)
+                        mem += joueur.MotsTrouvés[i];
+                    else
+                        mem += joueur.MotsTrouvés[i] + ";";
                 }
-                #endregion
-                #region saveSave
-
-                // LIRE UN FICHIER
-                string fullpath = Path.GetFullPath("Saves.txt"); // Mettre dans la variable full path l'accès complet du fichier grâce à la méthode GetFullPath(/nom du fichier à chercher dans l'ordi/)
-                List<string> toutesLesLignes = new List<string>(); // Créer une liste dans laquelle on stockera toutes les lignes du fichier texte qu'on souhaite ouvrir
-                bool sauvegardeExistante = false;
-                try // Méthode très pratique : Essaye d'effectuer les opérations entre les premières accolades, et si ça fait planter le programme, effectue les opérations entre les deuxièmes accolades
+                saveJoueurs[compteur] = mem;
+                compteur++;
+                mem = "";
+                for(int i = 0; i < joueur.Main.Count; i++)
                 {
-                    //Créez une instance de StreamReader pour lire à partir d'un fichier
-                    using (StreamReader sr = new StreamReader(fullpath)) // Overture de la lecture d'un fichier rangé dans le path trouvé en première ligne
-                    {
-                        string line;
-                        // Lire les lignes du fichier jusqu'à la fin.
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            toutesLesLignes.Add(line); // Ajouter les lignes à la liste
-                            if (line == nomSauv)
-                                sauvegardeExistante = true;
-                        }
-                    }
+                    string intermediaire = Convert.ToString(joueur.Main[i].Lettre);
+                    string intermediaire2 = Convert.ToString(joueur.Main[i].Valeur);
+                    if(i== joueur.Main.Count - 1)
+                        mem += intermediaire + ";" + intermediaire2;
+                    else
+                        mem += intermediaire + ";" + intermediaire2 + ";";
                 }
-                catch (Exception e) // Si le fichier n'a pas été trouvé, le programme affichera le message d'erreur au lieu de planter
+                saveJoueurs[compteur] = mem;
+                compteur++;
+            }
+            using (StreamWriter sw = new StreamWriter(nomSauv + "-Joueurs.txt"))
+            {
+                foreach (string s in saveJoueurs)
                 {
-                    Console.WriteLine("Le fichier n'a pas pu être lu.");
-                    Console.WriteLine(e.Message);
+                    sw.WriteLine(s);
                 }
-                if (!sauvegardeExistante)
-                    toutesLesLignes.Add(nomSauv);
-
-
-                // ECRIRE DANS UN FICHIER
-                using (StreamWriter sw = new StreamWriter("Saves.txt")) // Ouverture de l'écriture d'un fichier
-                {
-                    foreach (string s in toutesLesLignes) // Pour tous les strings à ajouter au fichier (ici je veux écrire dans un fichier tous les strings de la liste "toutesLesLignes")
-                    {
-                        sw.WriteLine(s); // écrire dans le fichier
-                    }
-                }
-                // C'est tout :)
-                #endregion
             }
 
-            return oui;
+            #endregion
+            #region saveJetons
+            mem = "";
+            string mem2 = "";
+            foreach(Jetons jeton in this.MonSacDeJetons.pioche)
+            {
+                string intermediaire = Convert.ToString(jeton.Lettre);
+                string intermediaire2 = Convert.ToString(jeton.Valeur);
+                mem += intermediaire + ";";
+                mem2 += intermediaire2 + ";";
+            }
+            mem = mem.Remove(mem.Length - 1);
+            mem2 = mem2.Remove(mem2.Length - 1);
+            using (StreamWriter sw = new StreamWriter(nomSauv + "-Jetons.txt"))
+            {
+                sw.WriteLine(mem);
+                sw.WriteLine(mem2);
+            }
+            #endregion
+            #region saveSave
+
+            // LIRE UN FICHIER
+            string fullpath = Path.GetFullPath("Saves.txt"); // Mettre dans la variable full path l'accès complet du fichier grâce à la méthode GetFullPath(/nom du fichier à chercher dans l'ordi/)
+            List<string> toutesLesLignes = new List<string>(); // Créer une liste dans laquelle on stockera toutes les lignes du fichier texte qu'on souhaite ouvrir
+            bool sauvegardeExistante = false;
+            try // Méthode très pratique : Essaye d'effectuer les opérations entre les premières accolades, et si ça fait planter le programme, effectue les opérations entre les deuxièmes accolades
+            {
+                //Créez une instance de StreamReader pour lire à partir d'un fichier
+                using (StreamReader sr = new StreamReader(fullpath)) // Overture de la lecture d'un fichier rangé dans le path trouvé en première ligne
+                {
+                    string line;
+                    // Lire les lignes du fichier jusqu'à la fin.
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        toutesLesLignes.Add(line); // Ajouter les lignes à la liste
+                        if (line == nomSauv)
+                            sauvegardeExistante = true;
+                    }
+                }
+            }
+            catch (Exception e) // Si le fichier n'a pas été trouvé, le programme affichera le message d'erreur au lieu de planter
+            {
+                Console.WriteLine("Le fichier n'a pas pu être lu.");
+                Console.WriteLine(e.Message);
+            }
+            if (!sauvegardeExistante)
+                toutesLesLignes.Add(nomSauv);
+
+
+            // ECRIRE DANS UN FICHIER
+            using (StreamWriter sw = new StreamWriter("Saves.txt")) // Ouverture de l'écriture d'un fichier
+            {
+                foreach (string s in toutesLesLignes) // Pour tous les strings à ajouter au fichier (ici je veux écrire dans un fichier tous les strings de la liste "toutesLesLignes")
+                {
+                    sw.WriteLine(s); // écrire dans le fichier
+                }
+            }
+            // C'est tout :)
+            #endregion
         }
     }
 }
