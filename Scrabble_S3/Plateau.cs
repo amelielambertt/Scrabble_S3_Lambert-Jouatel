@@ -399,6 +399,70 @@ namespace Scabble_JOUATEL
             return base.ToString();
         }
 
+
+        public bool[,] verifLettresV2(char[,] plateauFactice, char[,] plateauPlacé, ref bool[,] verifPlacement)
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    verifPlacement[i, j] = false;
+                }
+            }
+            // Console.WriteLine(this.Plato[7, 7]);
+            if (this.Plato[7,7] == '*')
+            {
+                for(int i = 0; i < 15; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        if (i == 7 && j == 7)
+                            verifPlacement[i, j] = true;
+                    }
+                }
+            }
+            else
+            {
+                for(int i = 1; i < 14; i++)
+                {
+                    for (int j = 1; j < 14; j++)
+                    {
+                        char l = this.Plato[i, j];
+                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                        {
+                            verifPlacement[i - 1, j] = true;
+                            verifPlacement[i + 1, j] = true;
+                            verifPlacement[i, j - 1] = true;
+                            verifPlacement[i, j + 1] = true;
+                        }
+                    }
+                }
+                for (int i = 0; i < 15; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        char l = this.Plato[i, j];
+                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                        {
+                            verifPlacement[i, j] = false;
+                        }
+                    }
+                }
+            }
+            /*
+            for(int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    Console.Write(verifPlacement[i, j]);
+                }
+                Console.WriteLine();
+            }
+            */
+            return verifPlacement;
+        }
+
+
         
         public int LaFonctionQuiMePerdra(char[,] plateauFactice, int curseurx, int curseury, List<int> alignementReferencex, List<int> alignementReferencey, bool alignementx = false, bool alignementy = false)
         {

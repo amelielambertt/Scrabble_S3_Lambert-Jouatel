@@ -12,29 +12,60 @@ namespace Scabble_JOUATEL
             // Dictionnaire DicoFR = new Dictionnaire();
             // Console.WriteLine(DicoFR.RechDichoRecursif("ablikt"));
 
-            THEMENU();
-
-            // Test :
-
-
             /*
-            string[] str = new string[]
+            Plateau plateauTest = new Plateau("TestVerif");
+            char[,] plateauFacticeTest = new char[15, 15]
             {
-                "Lorem Ipsum",
-                "Lorem Ipsum",
-                "Lorem Ipsum",
-                "Lorem Ipsum"
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+            };
+            char[,] plateauPlacéTest = new char[15, 15]
+            {
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
             };
 
-            using (StreamWriter sw = new StreamWriter("myFile.txt"))
+            bool[,] verifMatrix = new bool[15, 15];
+            for (int i = 0; i < 15; i++)
             {
-                foreach (string s in str)
+                for (int j = 0; j < 15; j++)
                 {
-                    sw.WriteLine(s);
+                    verifMatrix[i, j] = true;
                 }
             }
+            verifMatrix = plateauTest.verifLettresV2(plateauFacticeTest, plateauPlacéTest, ref verifMatrix);
+            affichageTestVerifMatrix(verifMatrix);
+
+            Console.ReadKey();
             */
 
+            THEMENU();
 
 
             /* BUG LIST :
@@ -48,6 +79,8 @@ namespace Scabble_JOUATEL
              * 
              * IA peuvent avoir deux fois le même prénom
              * 
+             * Rechdicorecursif pas précise en fin et début d'alphabet
+             * Alignements
              */
 
 
@@ -68,6 +101,30 @@ namespace Scabble_JOUATEL
             Sac_Jetons Partie1 = new Sac_Jetons("Jetons.txt");
             Console.WriteLine(Partie1.ToString());
             */
+        }
+
+        public static void affichageTestVerifMatrix(bool[,] verifMatrix)
+        {
+            for(int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    switch (verifMatrix[i, j])
+                    {
+                        case true:
+                            Console.BackgroundColor = ConsoleColor.Green;
+                            Console.Write("  ");
+                            Console.BackgroundColor = ConsoleColor.White;
+                            break;
+                        case false:
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.Write("  ");
+                            Console.BackgroundColor = ConsoleColor.White;
+                            break;
+                    }
+                }
+                Console.WriteLine();
+            }
         }
 
         #region Menu Principal

@@ -237,12 +237,14 @@ namespace Scabble_JOUATEL
         {
             Console.WriteLine();
 
+            char[,] plateauPlacé = new char[15, 15];
             char[,] plateauCurseur = new char[15,15];
             char[,] plateauFactice = new char[15, 15];
             for(int i = 0; i < 15; i++)
             {
                 for(int j = 0; j < 15; j++)
                 {
+                    plateauPlacé[i, j] = this.MonPlateau.Plato[i, j];
                     plateauCurseur[i,j] = this.MonPlateau.Plato[i,j];
                     plateauFactice[i, j] = this.MonPlateau.Plato[i, j];
                 }
@@ -256,6 +258,9 @@ namespace Scabble_JOUATEL
             int curseurx = 7;
             int curseury = 7;
             bool SURLEPLATEAU = false;
+
+
+            #region Setup AlignementRéférence
             List<int> alignementReferencex = new List<int>();
             List<int> alignementReferencey = new List<int>();
             List<int> alignementReferencexTemporaire = new List<int>();
@@ -284,26 +289,30 @@ namespace Scabble_JOUATEL
                     }
                 }
             }
+            #endregion
 
-            foreach(int index in alignementReferencex)
+            #region Setup Matrice de Vérification
+            bool[,] verifMatrix = new bool[15, 15];
+            for(int i = 0; i < 15; i++)
             {
-                Console.Write(index + " ");
+                for (int j = 0; j < 15; j++)
+                {
+                    verifMatrix[i,j] = true;
+                }
             }
-            Console.WriteLine();
-            foreach (int index in alignementReferencex)
-            {
-                Console.Write(index + " ");
-            }
-            // Console.ReadKey();
+            verifMatrix = this.MonPlateau.verifLettresV2(plateauFactice, plateauPlacé, ref verifMatrix);
+            #endregion
+
             ConsoleKeyInfo cki; //déclare une variable de type ConsoleKeyInfo
             while (confirmation == -1) // Tant qu'aucune option n'est confirmée
             {
 
                 Console.Clear();
                 Console.WriteLine("Tour de : " + joueurJouant.Nom);
+                #region ancienne vérification
                 int laCouleurDeLaRéponseDeLaVie = this.MonPlateau.LaFonctionQuiMePerdra(plateauFactice, curseurx, curseury, alignementReferencexTemporaire, alignementReferenceyTemporaire);
                 Affichage902IQ(joueurJouant.Main, optionSelectionnée, compteurDeTour, plateauCurseur, plateauFactice, curseurx, curseury, SURLEPLATEAU, laCouleurDeLaRéponseDeLaVie, "Placez les lettres souhaitées sur le plateau"); // Afficher le menu
-
+                #endregion
 
                 cki = Console.ReadKey(); // cki contient entre autres le code de la
 
@@ -343,6 +352,7 @@ namespace Scabble_JOUATEL
                             if(laCouleurDeLaRéponseDeLaVie != 2)
                             {
                                 plateauFactice[curseurx, curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
+                                plateauPlacé[curseurx, curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
                                 //ajouter les lettres adjacentes au plateau factice (donc c'est pas grave si on l'efface)
                                 bool lettreAdjacenteTrouvée = true;
                                 int deuxiemeCurseurx = curseurx;
@@ -399,15 +409,10 @@ namespace Scabble_JOUATEL
                                 }
                                 // Le plateauFactice contient désormais l'arbre de tous les mots reliés à celui que le joueur est en train de placer
 
-                                
-
-
-
-
-
-
                                 joueurJouant.Main.RemoveAt(optionSelectionnée);
-                                if(alignementReferencexTemporaire.Contains(curseurx) && !alignementReferenceyTemporaire.Contains(curseury))
+
+                                #region modif aligement
+                                if (alignementReferencexTemporaire.Contains(curseurx) && !alignementReferenceyTemporaire.Contains(curseury))
                                 {
                                     alignementReferenceyTemporaire.Clear();
                                 }
@@ -416,13 +421,13 @@ namespace Scabble_JOUATEL
                                 {
                                     alignementReferencexTemporaire.Clear();
                                 }
+                                #endregion
                                 SURLEPLATEAU = false;
                                 optionSelectionnée = 0;
                             }
                             break;
                         case ConsoleKey.Escape:
                             plateauCurseur[curseurx,curseury] = this.MonPlateau.Plato[curseurx,curseury];
-                            plateauFactice[curseurx, curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
                             jetonsAJouer.RemoveAt(jetonsAJouer.Count-1);
                             SURLEPLATEAU = false;
                             indexactuel += -1;
@@ -645,6 +650,7 @@ namespace Scabble_JOUATEL
                                                 this.MonPlateau.Plato[i, j] = l;
                                             }
                                         }
+                                        joueurJouant.Add_Score(scoreDuMot);
                                     }
                                 }
                                 while (joueurJouant.Main.Count < 7 && this.MonSacDeJetons.pioche.Count > 0)
