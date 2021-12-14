@@ -547,6 +547,94 @@ namespace Scabble_JOUATEL
                             curseury = 7;
                             plateauCurseur[curseurx, curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
                             break;
+                        case ConsoleKey.Delete:
+                            if(joueurJouant.Main.Count == 7) // Si aucun élément n'a été placé
+                            {
+                                joueurJouant.Main = passerSonTour(joueurJouant.Main);
+                                while (joueurJouant.Main.Count < 7 && this.MonSacDeJetons.pioche.Count > 0) // Remplir la main tant que c'est possible
+                                {
+                                    joueurJouant.Add_Main_Courante(this.MonSacDeJetons.retire_Jeton());
+                                }
+                                if (this.MonSacDeJetons.pioche.Count == 0) // Si le sac de jetons est vide
+                                {
+                                    continuerLaPartie = false; // On arrête la partie
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < 15; i++)
+                                {
+                                    for (int j = 0; j < 15; j++)
+                                    {
+                                        plateauAbsolumentComplet[i, j] = this.MonPlateau.Plato[i, j];
+                                    }
+                                }
+
+                                plateauFactice = new char[15, 15]
+                                {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                                };
+
+                                plateauPlacé = new char[15, 15]
+                                {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                                };
+
+                                plateauCurseur = new char[15, 15]
+                                {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                                };
+
+                                for (int i = jetonsAJouer.Count - 1; i >= 0; i--)
+                                {
+                                    joueurJouant.Add_Main_Courante(jetonsAJouer[i]);
+                                    jetonsAJouer.RemoveAt(i);
+                                }
+                                indexactuel = -1;
+                            } // sinon, vider le tableau et rendre dans la main
+                            break;
                         case ConsoleKey.Escape:
                             for (int i = 0; i < 15; i++)
                             {
@@ -748,6 +836,7 @@ namespace Scabble_JOUATEL
 
                                     for (int i = 0; i < tousLesMotsValides.Count; i++)
                                     {
+                                        joueurJouant.Add_Mot(tousLesBonusValides[i]);
                                         int scoreDuMot = 0;
                                         int motCompteDouble = 0;
                                         int motCompteTriple = 0;
@@ -887,7 +976,97 @@ namespace Scabble_JOUATEL
 
 
 
+        public static List<Jetons> passerSonTour(List<Jetons> mainDuJoueur)
+        {
+            Console.WriteLine();
+            List<Jetons> lettresASupprimer = new List<Jetons>();
 
+            int confirmation2 = -1;
+            int optionSelectionnée = 0;
+
+            ConsoleKeyInfo cki2; //déclare une variable de type ConsoleKeyInfo
+            while (confirmation2 == -1) // Tant qu'aucune option n'est confirmée
+            {
+
+                Console.Clear();
+
+                Console.WriteLine();
+
+                for (int i = 0; i < lettresASupprimer.Count; i++)
+                {
+                    Console.Write(" | " + lettresASupprimer[i]);
+                }
+                Console.Write(" |");
+                Console.WriteLine();
+
+                for (int i = 1; i <= mainDuJoueur.Count; i++)
+                {
+                    Console.Write("|");
+                    if (optionSelectionnée + 1 == i) // Affichage de toutes les options avec l'option sélectionnée en noir sur fond blanc
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(" " + mainDuJoueur[i - 1] + " ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                    }
+                    else
+                    {
+                        Console.Write(" " + mainDuJoueur[i - 1] + " ");
+                    }
+                }
+                Console.WriteLine();
+
+                cki2 = Console.ReadKey(); // cki contient entre autres le code de la
+
+                switch (cki2.Key)
+                {
+                    case ConsoleKey.RightArrow:
+                        optionSelectionnée++; // Bouger le curseur vers la droite
+                        if (optionSelectionnée >= mainDuJoueur.Count)
+                        {
+                            optionSelectionnée = 0;
+                        }
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        optionSelectionnée--; // Bouger le curseur vers la gauche
+                        if (optionSelectionnée < 0)
+                        {
+                            optionSelectionnée = mainDuJoueur.Count - 1;
+                        }
+                        break;
+                    case ConsoleKey.Spacebar:
+                        lettresASupprimer.Add(mainDuJoueur[optionSelectionnée]);
+                        mainDuJoueur.Remove(mainDuJoueur[optionSelectionnée]);
+                        optionSelectionnée = 0;
+                        break;
+                    case ConsoleKey.Escape:
+                        int borne = lettresASupprimer.Count;
+                        for (int i = borne - 1; i >= 0; i--)
+                        {
+                            mainDuJoueur.Add(lettresASupprimer[i]);
+                            lettresASupprimer.RemoveAt(i);
+                        }
+                        break;
+                    default:
+                        if (lettresASupprimer.Count > 0)
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("Suppression des lettres...");
+                            Thread.Sleep(1500);
+                            int borne2 = lettresASupprimer.Count;
+                            for (int i = borne2 - 1; i >= 0; i++)
+                            {
+                                lettresASupprimer.RemoveAt(i);
+                            }
+                        }
+                        confirmation2 = 0; // Confirmer la mise en place
+                        break;
+                }
+            }
+            return mainDuJoueur;
+        }
         public void Affichage902IQ(List<Jetons> main, int surbrillance, int compteurDeTour, char[,] plateauCurseur, char[,] plateauFactice, int curseurx, int curseury, bool SURLEPLATEAU, bool[,] matriceVerif, string bienvenue)
         {
 
