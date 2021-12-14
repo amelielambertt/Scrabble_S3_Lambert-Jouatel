@@ -12,12 +12,12 @@ namespace Scabble_JOUATEL
         string[][] GODZILLA;
         public Dictionnaire()
         {
-            string fullpath = Path.GetFullPath("Francais.txt");
-            List<string> toutesLesLignes = new List<string>();
+            string fullpath = Path.GetFullPath("Francais.txt"); //mettre dans la variable fullpath l'accès complet du fichier grâce à la méthode GetFulllPath ("nom du fichier dans l'ordi")
+            List<string> toutesLesLignes = new List<string>(); //création d'une liste dans laquelle on stockeratoutes les lignes du fichier texte que l'on souhaite ouvrir
             try
             {
                 //Créez une instance de StreamReader pour lire à partir d'un fichier
-                using (StreamReader sr = new StreamReader(fullpath))
+                using (StreamReader sr = new StreamReader(fullpath)) //ouverure de la lecture d'un fichier rangé dans le path trouvé en premiere ligne
                 {
                     string line;
                     // Lire les lignes du fichier jusqu'à la fin.
@@ -27,7 +27,7 @@ namespace Scabble_JOUATEL
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception e) //Si le fichier n'a pas été trouvé, le programme affichera le message d'erreur au lieu de planter
             {
                 Console.WriteLine("Le fichier n'a pas pu être lu.");
                 Console.WriteLine(e.Message);
@@ -40,7 +40,7 @@ namespace Scabble_JOUATEL
         }
 
 
-        public bool RechDichoRecursif(string mot, int début = 0, int fin = -1)
+        public bool RechDichoRecursif(string mot, int début = 0, int fin = -1) //teste si le mot est bien dans le dictionnaire 
         {
             if (mot == null)
                 return false;
@@ -63,7 +63,7 @@ namespace Scabble_JOUATEL
         }
 
 
-        public override string ToString()
+        public override string ToString() qui retourne une chaîne de caractères qui décrit le dictionnaire à savoir ici le nombre de mots par longueur et la langue
         {
             Console.WriteLine("Prépare toi à un turbo string de l'enfer");
             Console.WriteLine("Tu vas avoir des séries de " + this.GODZILLA[5].Length + " mots d'un coup");
