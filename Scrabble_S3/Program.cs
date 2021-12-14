@@ -14,6 +14,26 @@ namespace Scabble_JOUATEL
 
             /*
             Plateau plateauTest = new Plateau("TestVerif");
+
+            char[,] plateauAbsolumentCompletTest = new char[15, 15]
+            {
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','_','_','2','_','_','V','_','_','2','_','_','_','_',} ,
+                {'_','7','_','_','_','7','_','E','U','X','_','_','_','7','_',} ,
+                {'_','_','8','_','_','_','8','N','8','_','_','_','8','_','_',} ,
+                {'3','_','_','8','_','_','R','I','_','_','_','8','_','_','3',} ,
+                {'_','_','8','_','_','_','8','N','8','_','_','_','8','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+            };
+
             char[,] plateauFacticeTest = new char[15, 15]
             {
                 {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
@@ -21,7 +41,7 @@ namespace Scabble_JOUATEL
                 {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
                 {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
                 {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
-                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','7','_','_','_','7','_','E','U','X','_','_','_','7','_',} ,
                 {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
                 {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
                 {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
@@ -32,6 +52,7 @@ namespace Scabble_JOUATEL
                 {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
                 {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
             };
+
             char[,] plateauPlacéTest = new char[15, 15]
             {
                 {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
@@ -39,7 +60,7 @@ namespace Scabble_JOUATEL
                 {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
                 {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
                 {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
-                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','7','_','_','_','7','_','_','U','X','_','_','_','7','_',} ,
                 {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
                 {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
                 {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
@@ -50,6 +71,8 @@ namespace Scabble_JOUATEL
                 {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
                 {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
             };
+
+            
 
             bool[,] verifMatrix = new bool[15, 15];
             for (int i = 0; i < 15; i++)
@@ -59,9 +82,11 @@ namespace Scabble_JOUATEL
                     verifMatrix[i, j] = true;
                 }
             }
-            verifMatrix = plateauTest.verifLettresV2(plateauFacticeTest, plateauPlacéTest, ref verifMatrix);
-            affichageTestVerifMatrix(verifMatrix);
-
+            verifMatrix = plateauTest.verifLettresV2(plateauAbsolumentCompletTest, plateauFacticeTest, plateauPlacéTest, ref verifMatrix);
+            affichageTestVerifMatrix(verifMatrix, plateauFacticeTest);
+            Console.WriteLine();
+            Console.WriteLine();
+            
             Console.ReadKey();
             */
 
@@ -103,7 +128,7 @@ namespace Scabble_JOUATEL
             */
         }
 
-        public static void affichageTestVerifMatrix(bool[,] verifMatrix)
+        public static void affichageTestVerifMatrix(bool[,] verifMatrix, char[,] plateauFactice)
         {
             for(int i = 0; i < 15; i++)
             {
@@ -113,13 +138,13 @@ namespace Scabble_JOUATEL
                     {
                         case true:
                             Console.BackgroundColor = ConsoleColor.Green;
-                            Console.Write("  ");
-                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.Write(plateauFactice[i,j] + " ");
+                            Console.BackgroundColor = ConsoleColor.Black;
                             break;
                         case false:
                             Console.BackgroundColor = ConsoleColor.Red;
-                            Console.Write("  ");
-                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.Write(plateauFactice[i, j] + " ");
+                            Console.BackgroundColor = ConsoleColor.Black;
                             break;
                     }
                 }

@@ -212,7 +212,7 @@ namespace Scabble_JOUATEL
         {
             Console.SetWindowSize(100, 30);
             Console.Clear();
-            Console.WriteLine('\t' + "Tour : " + compteurDeTour);
+            // Console.WriteLine('\t' + "Tour : " + compteurDeTour);
             this.MonPlateau.AffichageOMG(this.ListeDesJoueurs);
             Thread.Sleep(1000);
             bool continuerLaPartie = true;
@@ -237,18 +237,87 @@ namespace Scabble_JOUATEL
         {
             Console.WriteLine();
 
+            /*
             char[,] plateauPlacé = new char[15, 15];
             char[,] plateauCurseur = new char[15,15];
-            char[,] plateauFactice = new char[15, 15];
             for(int i = 0; i < 15; i++)
             {
                 for(int j = 0; j < 15; j++)
                 {
                     plateauPlacé[i, j] = this.MonPlateau.Plato[i, j];
                     plateauCurseur[i,j] = this.MonPlateau.Plato[i,j];
-                    plateauFactice[i, j] = this.MonPlateau.Plato[i, j];
                 }
             }
+            */
+
+            char[,] plateauAbsolumentComplet = new char[15, 15];
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    plateauAbsolumentComplet[i, j] = this.MonPlateau.Plato[i, j];
+                }
+            }
+
+
+            char[,] plateauFactice = new char[15, 15]
+            {
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+            };
+
+            char[,] plateauPlacé = new char[15, 15]
+            {
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+            };
+
+            char[,] plateauCurseur = new char[15, 15]
+            {
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+            };
+
+
 
             List<Jetons> jetonsAJouer = new List<Jetons>();
             int indexactuel = -1;
@@ -258,7 +327,6 @@ namespace Scabble_JOUATEL
             int curseurx = 7;
             int curseury = 7;
             bool SURLEPLATEAU = false;
-
 
             #region Setup AlignementRéférence
             List<int> alignementReferencex = new List<int>();
@@ -300,19 +368,16 @@ namespace Scabble_JOUATEL
                     verifMatrix[i,j] = true;
                 }
             }
-            verifMatrix = this.MonPlateau.verifLettresV2(plateauFactice, plateauPlacé, ref verifMatrix);
+            verifMatrix = this.MonPlateau.verifLettresV2(plateauAbsolumentComplet, plateauFactice, plateauPlacé, ref verifMatrix);
             #endregion
 
             ConsoleKeyInfo cki; //déclare une variable de type ConsoleKeyInfo
             while (confirmation == -1) // Tant qu'aucune option n'est confirmée
             {
-
                 Console.Clear();
                 Console.WriteLine("Tour de : " + joueurJouant.Nom);
-                #region ancienne vérification
-                int laCouleurDeLaRéponseDeLaVie = this.MonPlateau.LaFonctionQuiMePerdra(plateauFactice, curseurx, curseury, alignementReferencexTemporaire, alignementReferenceyTemporaire);
-                Affichage902IQ(joueurJouant.Main, optionSelectionnée, compteurDeTour, plateauCurseur, plateauFactice, curseurx, curseury, SURLEPLATEAU, laCouleurDeLaRéponseDeLaVie, "Placez les lettres souhaitées sur le plateau"); // Afficher le menu
-                #endregion
+                verifMatrix = this.MonPlateau.verifLettresV2(plateauAbsolumentComplet, plateauFactice, plateauPlacé, ref verifMatrix);
+                Affichage902IQ(joueurJouant.Main, optionSelectionnée, compteurDeTour, plateauCurseur, plateauAbsolumentComplet, curseurx, curseury, SURLEPLATEAU, verifMatrix, "Placez les lettres souhaitées sur le plateau"); // Afficher le menu
 
                 cki = Console.ReadKey(); // cki contient entre autres le code de la
 
@@ -349,10 +414,12 @@ namespace Scabble_JOUATEL
                             plateauCurseur[curseurx,curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
                             break;
                         case ConsoleKey.Spacebar:
-                            if(laCouleurDeLaRéponseDeLaVie != 2)
+                            if (verifMatrix[curseurx,curseury])
                             {
                                 plateauFactice[curseurx, curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
                                 plateauPlacé[curseurx, curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
+                                plateauAbsolumentComplet[curseurx, curseury] = joueurJouant.Main[optionSelectionnée].Lettre;
+
                                 //ajouter les lettres adjacentes au plateau factice (donc c'est pas grave si on l'efface)
                                 bool lettreAdjacenteTrouvée = true;
                                 int deuxiemeCurseurx = curseurx;
@@ -360,15 +427,19 @@ namespace Scabble_JOUATEL
                                 while (lettreAdjacenteTrouvée) //chercher à en haut
                                 {
                                     lettreAdjacenteTrouvée = false; //on estime qu'on ne trouve pas la lettre
+                                    
                                     if (deuxiemeCurseurx != 0) // Si on n'arrive pas en bordure de plateau
                                     {
                                         deuxiemeCurseurx -= 1; // On peut vérifier la case au dessus
-                                        char l = this.MonPlateau.Plato[deuxiemeCurseurx, curseury]; // simplification du if en dessous
+                                        char l = plateauAbsolumentComplet[deuxiemeCurseurx, curseury]; // simplification du if en dessous
                                         if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*') //si la case au dessus est une lettre
-                                            plateauFactice[deuxiemeCurseurx, curseury] = this.MonPlateau.Plato[deuxiemeCurseurx, curseury]; // on ajoute cette lettre au plateau factice pour la retenir
-                                        lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                        {
+                                            plateauFactice[deuxiemeCurseurx, curseury] = l; // on ajoute cette lettre au plateau factice pour la retenir
+                                            lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                        }
                                     }
                                 }
+                                lettreAdjacenteTrouvée = true;
                                 deuxiemeCurseurx = curseurx;
                                 while (lettreAdjacenteTrouvée) //chercher à en bas
                                 {
@@ -376,42 +447,54 @@ namespace Scabble_JOUATEL
                                     if (deuxiemeCurseurx != 14) // Si on n'arrive pas en bordure de plateau
                                     {
                                         deuxiemeCurseurx += 1; // On peut vérifier la case en dessous
-                                        char l = this.MonPlateau.Plato[deuxiemeCurseurx, curseury]; // simplification du if en dessous
+                                        char l = plateauAbsolumentComplet[deuxiemeCurseurx, curseury]; // simplification du if en dessous
                                         if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*') //si la case au dessus est une lettre
-                                            plateauFactice[deuxiemeCurseurx, curseury] = this.MonPlateau.Plato[deuxiemeCurseurx, curseury]; // on ajoute cette lettre au plateau factice pour la retenir
-                                        lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                        {
+                                            plateauFactice[deuxiemeCurseurx, curseury] = l; // on ajoute cette lettre au plateau factice pour la retenir
+                                            lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                        }
                                     }
                                 }
+
+                                lettreAdjacenteTrouvée = true;
+
                                 while (lettreAdjacenteTrouvée) //chercher à gauche
                                 {
                                     lettreAdjacenteTrouvée = false; //on estime qu'on ne trouve pas la lettre
                                     if (deuxiemeCurseury != 0) // Si on n'arrive pas en bordure de plateau
                                     {
-                                        deuxiemeCurseury -= 1; // On peut vérifier la case au dessus
-                                        char l = this.MonPlateau.Plato[curseurx, deuxiemeCurseury]; // simplification du if en dessous
+                                        deuxiemeCurseury -= 1; // On peut vérifier la case à gauche
+                                        char l = plateauAbsolumentComplet[curseurx, deuxiemeCurseury]; // simplification du if en dessous
                                         if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*') //si la case au dessus est une lettre
-                                            plateauFactice[curseurx, deuxiemeCurseury] = this.MonPlateau.Plato[curseurx, deuxiemeCurseury]; // on ajoute cette lettre au plateau factice pour la retenir
-                                        lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                        {
+                                            plateauFactice[curseurx, deuxiemeCurseury] = l; // on ajoute cette lettre au plateau factice pour la retenir
+                                            lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                        }
                                     }
                                 }
                                 deuxiemeCurseury = curseury;
+
+                                lettreAdjacenteTrouvée = true;
                                 while (lettreAdjacenteTrouvée) //chercher à droite
                                 {
                                     lettreAdjacenteTrouvée = false; //on estime qu'on ne trouve pas la lettre
                                     if (deuxiemeCurseury != 14) // Si on n'arrive pas en bordure de plateau
                                     {
-                                        deuxiemeCurseury += 1; // On peut vérifier la case en dessous
-                                        char l = this.MonPlateau.Plato[curseurx, deuxiemeCurseury]; // simplification du if en dessous
+                                        deuxiemeCurseury += 1; // On peut vérifier la case à droite
+                                        char l = plateauAbsolumentComplet[curseurx, deuxiemeCurseury]; // simplification du if en dessous
                                         if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*') //si la case au dessus est une lettre
-                                            plateauFactice[curseurx, deuxiemeCurseury] = this.MonPlateau.Plato[curseurx, deuxiemeCurseury]; // on ajoute cette lettre au plateau factice pour la retenir
-                                        lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                        {
+                                            plateauFactice[curseurx, deuxiemeCurseury] = l; // on ajoute cette lettre au plateau factice pour la retenir
+                                            lettreAdjacenteTrouvée = true; // On a trouvé une lettre donc on peut recommencer
+                                        }
                                     }
                                 }
                                 // Le plateauFactice contient désormais l'arbre de tous les mots reliés à celui que le joueur est en train de placer
 
                                 joueurJouant.Main.RemoveAt(optionSelectionnée);
 
-                                #region modif aligement
+                                #region ancien modif aligement
+                                /*
                                 if (alignementReferencexTemporaire.Contains(curseurx) && !alignementReferenceyTemporaire.Contains(curseury))
                                 {
                                     alignementReferenceyTemporaire.Clear();
@@ -421,6 +504,7 @@ namespace Scabble_JOUATEL
                                 {
                                     alignementReferencexTemporaire.Clear();
                                 }
+                                */
                                 #endregion
                                 SURLEPLATEAU = false;
                                 optionSelectionnée = 0;
@@ -468,10 +552,67 @@ namespace Scabble_JOUATEL
                             {
                                 for (int j = 0; j < 15; j++)
                                 {
-                                    plateauCurseur[i, j] = this.MonPlateau.Plato[i, j];
-                                    plateauFactice[i, j] = this.MonPlateau.Plato[i, j];
+                                    plateauAbsolumentComplet[i, j] = this.MonPlateau.Plato[i, j];
                                 }
                             }
+
+                            plateauFactice = new char[15, 15]
+                            {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                            };
+
+                            plateauPlacé = new char[15, 15]
+                            {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                            };
+
+                            plateauCurseur = new char[15, 15]
+                            {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                            };
+
                             for (int i = jetonsAJouer.Count-1;  i >= 0; i--)
                             {
                                 joueurJouant.Add_Main_Courante(jetonsAJouer[i]);
@@ -479,195 +620,263 @@ namespace Scabble_JOUATEL
                             }
                             indexactuel = -1;
                             break;
+                        #region Valider le mot
                         case ConsoleKey.Enter:
                             // Valider le mot
-                            List<char[]> tousLesMotsTrouvés = new List<char[]>();
-                            if (alignementReferencexTemporaire.Count == 0)
+
+                            bool tourJoué = false;
+
+                            for(int i = 0; i < 15; i++)
                             {
-                                for (int i = 0; i < 15; i++)
+                                for (int j = 0; j < 15; j++)
                                 {
-                                    List<char> motTrouvé = new List<char>();
-                                    for(int j = 0; j < 15; j++)
-                                    {
-                                        char l = plateauFactice[j,i];
-                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
-                                            motTrouvé.Add(l);
-                                        else
-                                        {
-                                            if (motTrouvé.Count > 1)
-                                            {
-                                                char[] motAjouté = motTrouvé.ToArray();
-                                                tousLesMotsTrouvés.Add(motAjouté);
-                                            }
-                                            motTrouvé.Clear();
-                                        }
-                                    }
-                                }
-                                List<char> motTrouvéy = new List<char>();
-                                for (int j = 0; j < 14; j++)
-                                {
-                                    char l = plateauFactice[curseurx, j];
+                                    char l = plateauFactice[i, j];
                                     if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
-                                        motTrouvéy.Add(l);
-                                    else
                                     {
-                                        if (motTrouvéy.Count > 1)
-                                        {
-                                            char[] motAjouté = motTrouvéy.ToArray();
-                                            tousLesMotsTrouvés.Add(motAjouté);
-                                        }
-                                        motTrouvéy.Clear();
+                                        tourJoué = true;
                                     }
                                 }
                             }
-                            else if(alignementReferenceyTemporaire.Count == 0)
+
+                            if (tourJoué)
                             {
+                                List<char[]> tousLesMotsTrouvés = new List<char[]>();
+                                List<char[]> tousLesBonus = new List<char[]>();
                                 for (int i = 0; i < 15; i++)
                                 {
                                     List<char> motTrouvé = new List<char>();
-                                    for (int j = 0; j < 14; j++)
-                                    {
-                                        char l = plateauFactice[i, j];
-                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
-                                            motTrouvé.Add(l);
-                                        else
-                                        {
-                                            if (motTrouvé.Count > 1)
-                                            {
-                                                char[] motAjouté = motTrouvé.ToArray();
-                                                tousLesMotsTrouvés.Add(motAjouté);
-                                            }
-                                            motTrouvé.Clear();
-                                        }
-                                    }
-                                }
-                                List<char> motTrouvéx = new List<char>();
-                                for (int j = 0; j < 14; j++)
-                                {
-                                    char l = plateauFactice[j, curseury];
-                                    if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
-                                        motTrouvéx.Add(l);
-                                    else
-                                    {
-                                        if (motTrouvéx.Count > 1)
-                                        {
-                                            char[] motAjouté = motTrouvéx.ToArray();
-                                            tousLesMotsTrouvés.Add(motAjouté);
-                                        }
-                                        motTrouvéx.Clear();
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < 15; i++)
-                                {
-                                    List<char> motTrouvé = new List<char>();
-                                    for (int j = 0; j < 14; j++)
-                                    {
-                                        char l = plateauFactice[j, i];
-                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
-                                            motTrouvé.Add(l);
-                                        else
-                                        {
-                                            if (motTrouvé.Count > 1)
-                                            {
-                                                char[] motAjouté = motTrouvé.ToArray();
-                                                tousLesMotsTrouvés.Add(motAjouté);
-                                            }
-                                            motTrouvé.Clear();
-                                        }
-                                    }
-                                }
-                                for (int i = 0; i < 15; i++)
-                                {
-                                    List<char> motTrouvé = new List<char>();
-                                    for (int j = 0; j < 14; j++)
-                                    {
-                                        char l = plateauFactice[i, j];
-                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
-                                            motTrouvé.Add(l);
-                                        else
-                                        {
-                                            if (motTrouvé.Count > 1)
-                                            {
-                                                char[] motAjouté = motTrouvé.ToArray();
-                                                tousLesMotsTrouvés.Add(motAjouté);
-                                            }
-                                            motTrouvé.Clear();
-                                        }
-                                    }
-                                }
-                            }
-                            bool validateur = true;
-
-
-
-
-                            List<string> tousLesMotsValides = new List<string>();
-                            foreach(char[] mot in tousLesMotsTrouvés)
-                            {
-                                string inter2 = new string(mot);
-                                if (MonDico.RechDichoRecursif(inter2))
-                                {
-                                    Console.WriteLine(inter2 + " est un mot valide.");
-                                    tousLesMotsValides.Add(inter2);
-                                }
-                                else
-                                {
-                                    validateur = false;
-                                    Console.WriteLine(inter2 + " n'est pas un mot valide");
-                                }
-                            }
-                            Thread.Sleep(2000);
-
-                            if (validateur)
-                            {
-                                confirmation = 0;
-                                for (int i = 0; i < 15; i++)
-                                {
+                                    List<char> bonusAssociés = new List<char>();
                                     for (int j = 0; j < 15; j++)
                                     {
-                                        int scoreDuMot = 0;
-                                        bool motCompteDouble = false;
-                                        bool motCompteTriple = false;
+                                        char l = plateauFactice[j, i];
+                                        char L = this.MonPlateau.Plato[j, i];
+                                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                        {
+                                            motTrouvé.Add(l);
+                                            bonusAssociés.Add(L);
+                                        }
+                                        else
+                                        {
+                                            if (motTrouvé.Count > 1)
+                                            {
+                                                char[] motAjouté = motTrouvé.ToArray();
+                                                char[] bonusAjoutés = bonusAssociés.ToArray();
+                                                tousLesMotsTrouvés.Add(motAjouté);
+                                                tousLesBonus.Add(bonusAjoutés);
+                                            }
+                                            motTrouvé.Clear();
+                                            bonusAssociés.Clear();
+                                        }
+                                    }
+                                    if (motTrouvé.Count > 1)
+                                    {
+                                        char[] motAjouté = motTrouvé.ToArray();
+                                        char[] bonusAjoutés = bonusAssociés.ToArray();
+                                        tousLesMotsTrouvés.Add(motAjouté);
+                                        tousLesBonus.Add(bonusAjoutés);
+                                    }
+                                    motTrouvé.Clear();
+                                    bonusAssociés.Clear();
+                                } // Trouver tous les mots écrits verticalement
+                                for (int i = 0; i < 15; i++)
+                                {
+                                    List<char> motTrouvé = new List<char>();
+                                    List<char> bonusAssociés = new List<char>();
+                                    for (int j = 0; j < 15; j++)
+                                    {
                                         char l = plateauFactice[i, j];
                                         char L = this.MonPlateau.Plato[i, j];
                                         if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
                                         {
-                                            if (L != l)
-                                            {
-                                                if (L == 3)
-                                                    motCompteTriple = true;
-                                                else if (L == 2)
-                                                    motCompteDouble = true;
-                                                else if (L == 8)
-                                                    scoreDuMot += Jetons.trouverLaValeur(l) * 2;
-                                                else if (L == 7)
-                                                    scoreDuMot += Jetons.trouverLaValeur(l) * 3;
-                                                else
-                                                    scoreDuMot += Jetons.trouverLaValeur(l);
-                                                this.MonPlateau.Plato[i, j] = l;
-                                            }
+                                            motTrouvé.Add(l);
+                                            bonusAssociés.Add(L);
                                         }
-                                        joueurJouant.Add_Score(scoreDuMot);
+                                        else
+                                        {
+                                            if (motTrouvé.Count > 1)
+                                            {
+                                                char[] motAjouté = motTrouvé.ToArray();
+                                                char[] bonusAjoutés = bonusAssociés.ToArray();
+                                                tousLesMotsTrouvés.Add(motAjouté);
+                                                tousLesBonus.Add(bonusAjoutés);
+                                            }
+                                            motTrouvé.Clear();
+                                            bonusAssociés.Clear();
+                                        }
+                                    }
+                                    if (motTrouvé.Count > 1)
+                                    {
+                                        char[] motAjouté = motTrouvé.ToArray();
+                                        char[] bonusAjoutés = bonusAssociés.ToArray();
+                                        tousLesMotsTrouvés.Add(motAjouté);
+                                        tousLesBonus.Add(bonusAjoutés);
+                                    }
+                                    motTrouvé.Clear();
+                                    bonusAssociés.Clear();
+                                } // Trouver tous les mots écrits horizontalement
+
+
+
+                                bool validateur = true;
+
+                                List<string> tousLesMotsValides = new List<string>();
+                                List<string> tousLesBonusValides = new List<string>();
+                                for (int i = 0; i < tousLesMotsTrouvés.Count; i++)
+                                {
+                                    string inter2 = new string(tousLesMotsTrouvés[i]);
+                                    string inter3 = new string(tousLesBonus[i]);
+                                    if (MonDico.RechDichoRecursif(inter2))
+                                    {
+                                        Console.WriteLine(inter2 + " est un mot valide.");
+                                        tousLesMotsValides.Add(inter2);
+                                        tousLesBonusValides.Add(inter3);
+                                    }
+                                    else
+                                    {
+                                        validateur = false; // Si un mot n'est pas valide, on ne permet pas au tour de se terminer
+                                        Console.WriteLine(inter2 + " n'est pas un mot valide");
                                     }
                                 }
-                                while (joueurJouant.Main.Count < 7 && this.MonSacDeJetons.pioche.Count > 0)
+                                Thread.Sleep(2000);
+
+
+
+
+                                if (validateur) // Uniquement si tous les mots sont valides
                                 {
-                                    joueurJouant.Add_Main_Courante(this.MonSacDeJetons.retire_Jeton());
+                                    confirmation = 0;
+
+                                    for (int i = 0; i < tousLesMotsValides.Count; i++)
+                                    {
+                                        int scoreDuMot = 0;
+                                        int motCompteDouble = 0;
+                                        int motCompteTriple = 0;
+                                        for (int j = 0; j < tousLesMotsValides[i].Length; j++)
+                                        {
+                                            int scoreLocal = 0;
+                                            if (tousLesBonus[i][j] == '8') scoreLocal += Jetons.trouverLaValeur(tousLesMotsValides[i][j]) * 2;
+                                            else if (tousLesBonus[i][j] == '7') scoreLocal += Jetons.trouverLaValeur(tousLesMotsValides[i][j]) * 3;
+                                            else
+                                            {
+                                                scoreLocal += Jetons.trouverLaValeur(tousLesMotsValides[i][j]);
+                                                if (tousLesBonusValides[i][j] == '2') motCompteDouble++;
+                                                if (tousLesBonusValides[i][j] == '3') motCompteTriple++;
+                                            }
+                                            scoreDuMot += scoreLocal;
+                                        }
+                                        for (int k = 0; k < motCompteDouble; k++) scoreDuMot *= 2;
+                                        for (int k = 0; k < motCompteTriple; k++) scoreDuMot *= 3;
+                                        joueurJouant.Add_Score(scoreDuMot);
+                                    } // Calcul du score des mots
+
+
+                                    for (int i = 0; i < 15; i++)
+                                    {
+                                        for (int j = 0; j < 15; j++)
+                                        {
+                                            char l = plateauFactice[i, j];
+                                            if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                                            {
+                                                this.MonPlateau.Plato[i, j] = l;
+                                                plateauAbsolumentComplet[i, j] = l;
+                                            }
+                                        }
+                                    } // On inscrit les lettres sur le plateau
+
+                                    if (joueurJouant.Main.Count == 0) // Si le joueur a fait un scrabble
+                                    {
+                                        joueurJouant.Add_Score(50); // +50 points
+                                    }
+                                    while (joueurJouant.Main.Count < 7 && this.MonSacDeJetons.pioche.Count > 0) // Remplir la main tant que c'est possible
+                                    {
+                                        joueurJouant.Add_Main_Courante(this.MonSacDeJetons.retire_Jeton());
+                                    }
+                                    if (this.MonSacDeJetons.pioche.Count == 0) // Si le sac de jetons est vide
+                                    {
+                                        continuerLaPartie = false; // On arrête la partie
+                                    }
                                 }
-                                Console.WriteLine(this.MonSacDeJetons.pioche.Count);
-                                if (this.MonSacDeJetons.pioche.Count == 0)
+                                else // Si un au moins des mots n'est pas valide
                                 {
-                                    continuerLaPartie = false;
+                                    for (int i = 0; i < 15; i++)
+                                    {
+                                        for (int j = 0; j < 15; j++)
+                                        {
+                                            plateauAbsolumentComplet[i, j] = this.MonPlateau.Plato[i, j];
+                                        }
+                                    }
+
+                                    plateauFactice = new char[15, 15]
+                                    {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                                    };
+
+                                    plateauPlacé = new char[15, 15]
+                                    {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                                    };
+
+                                    plateauCurseur = new char[15, 15]
+                                    {
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'3','_','_','8','_','_','_','*','_','_','_','8','_','_','3',} ,
+                                {'_','_','8','_','_','_','8','_','8','_','_','_','8','_','_',} ,
+                                {'_','7','_','_','_','7','_','_','_','7','_','_','_','7','_',} ,
+                                {'_','_','_','_','2','_','_','_','_','_','2','_','_','_','_',} ,
+                                {'8','_','_','2','_','_','_','8','_','_','_','2','_','_','8',} ,
+                                {'_','_','2','_','_','_','8','_','8','_','_','_','2','_','_',} ,
+                                {'_','2','_','_','_','7','_','_','_','7','_','_','_','2','_',} ,
+                                {'3','_','_','8','_','_','_','3','_','_','_','8','_','_','3',}
+                                    };
+                                    // Vider tous les tableaux nécessaires au tour
+
+                                    for (int i = jetonsAJouer.Count - 1; i >= 0; i--)
+                                    {
+                                        joueurJouant.Add_Main_Courante(jetonsAJouer[i]);
+                                        jetonsAJouer.RemoveAt(i);
+                                    } // Remettre les jetons dans la main
+                                    indexactuel = -1;
                                 }
                             }
-
                             
 
 
                             break;
+                            #endregion
                     }
                 }
 
@@ -679,11 +888,10 @@ namespace Scabble_JOUATEL
 
 
 
-        public void Affichage902IQ(List<Jetons> main, int surbrillance, int compteurDeTour, char[,] plateauCurseur, char[,] plateauFactice, int curseurx, int curseury, bool SURLEPLATEAU, int presqueBool, string bienvenue)
+        public void Affichage902IQ(List<Jetons> main, int surbrillance, int compteurDeTour, char[,] plateauCurseur, char[,] plateauFactice, int curseurx, int curseury, bool SURLEPLATEAU, bool[,] matriceVerif, string bienvenue)
         {
 
-            Console.WriteLine('\t' + "Tour : " + compteurDeTour);
-            this.MonPlateau.AffichageOMGFactice(this.ListeDesJoueurs, plateauCurseur, plateauFactice, curseurx, curseury, SURLEPLATEAU, presqueBool);
+            this.MonPlateau.AffichageOMGFactice(this.ListeDesJoueurs, plateauCurseur, plateauFactice, curseurx, curseury, SURLEPLATEAU, matriceVerif);
             Console.WriteLine();
             Console.WriteLine();
 

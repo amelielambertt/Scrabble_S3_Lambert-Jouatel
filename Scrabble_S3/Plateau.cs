@@ -148,7 +148,7 @@ namespace Scabble_JOUATEL
             }
         }
 
-        public void AffichageOMGFactice(List<Joueur> listeDesJoueurs, char[,] plateauCurseur, char[,] plateauFactice, int curseurx, int curseury, bool SURLEPLATEAU, int presqueBool)
+        public void AffichageOMGFactice(List<Joueur> listeDesJoueurs, char[,] plateauCurseur, char[,] plateauFactice, int curseurx, int curseury, bool SURLEPLATEAU, bool[,] matriceVerif)
         {
             for (int i = 0; i < 15; i++)
             {
@@ -160,21 +160,13 @@ namespace Scabble_JOUATEL
                         case '3':
                             if(curseurx == i && curseury == j)
                             {
-                                if (presqueBool == 0 && SURLEPLATEAU)
+                                if (matriceVerif[i,j] && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Green;
                                     Console.Write(plateauCurseur[i, j] + " ");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                 }
-                                else if (presqueBool == 1 && SURLEPLATEAU)
-                                {
-                                    Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.ForegroundColor = ConsoleColor.Black;
-                                    Console.Write(plateauCurseur[i, j] + " ");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    Console.BackgroundColor = ConsoleColor.Black;
-                                }
-                                else if (presqueBool == 2 && SURLEPLATEAU)
+                                else if ((!matriceVerif[i, j]) && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Red;
                                     Console.Write(plateauCurseur[i, j] + " ");
@@ -191,21 +183,13 @@ namespace Scabble_JOUATEL
                         case '2':
                             if (curseurx == i && curseury == j)
                             {
-                                if (presqueBool == 0 && SURLEPLATEAU)
+                                if (matriceVerif[i, j] && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Green;
                                     Console.Write(plateauCurseur[i, j] + " ");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                 }
-                                else if (presqueBool == 1 && SURLEPLATEAU)
-                                {
-                                    Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.ForegroundColor = ConsoleColor.Black;
-                                    Console.Write(plateauCurseur[i, j] + " ");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    Console.BackgroundColor = ConsoleColor.Black;
-                                }
-                                else if (presqueBool == 2 && SURLEPLATEAU)
+                                else if ((!matriceVerif[i, j]) && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Red;
                                     Console.Write(plateauCurseur[i, j] + " ");
@@ -222,21 +206,13 @@ namespace Scabble_JOUATEL
                         case '7':
                             if (curseurx == i && curseury == j)
                             {
-                                if (presqueBool == 0 && SURLEPLATEAU)
+                                if (matriceVerif[i, j] && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Green;
                                     Console.Write(plateauCurseur[i, j] + " ");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                 }
-                                else if (presqueBool == 1 && SURLEPLATEAU)
-                                {
-                                    Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.ForegroundColor = ConsoleColor.Black;
-                                    Console.Write(plateauCurseur[i, j] + " ");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    Console.BackgroundColor = ConsoleColor.Black;
-                                }
-                                else if (presqueBool == 2 && SURLEPLATEAU)
+                                else if ((!matriceVerif[i, j]) && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Red;
                                     Console.Write(plateauCurseur[i, j] + " ");
@@ -253,21 +229,13 @@ namespace Scabble_JOUATEL
                         case '8':
                             if (curseurx == i && curseury == j)
                             {
-                                if (presqueBool == 0 && SURLEPLATEAU)
+                                if (matriceVerif[i, j] && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Green;
                                     Console.Write(plateauCurseur[i, j] + " ");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                 }
-                                else if (presqueBool == 1 && SURLEPLATEAU)
-                                {
-                                    Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.ForegroundColor = ConsoleColor.Black;
-                                    Console.Write(plateauCurseur[i, j] + " ");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    Console.BackgroundColor = ConsoleColor.Black;
-                                }
-                                else if (presqueBool == 2 && SURLEPLATEAU)
+                                else if ((!matriceVerif[i, j]) && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Red;
                                     Console.Write(plateauCurseur[i, j] + " ");
@@ -284,21 +252,13 @@ namespace Scabble_JOUATEL
                         case '*':
                             if (curseurx == i && curseury == j && SURLEPLATEAU)
                             {
-                                if (presqueBool == 0 && SURLEPLATEAU)
+                                if (matriceVerif[i, j] && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Green;
                                     Console.Write(plateauCurseur[i, j] + " ");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                 }
-                                else if (presqueBool == 1 && SURLEPLATEAU)
-                                {
-                                    Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.ForegroundColor = ConsoleColor.Black;
-                                    Console.Write(plateauCurseur[i, j] + " ");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    Console.BackgroundColor = ConsoleColor.Black;
-                                }
-                                else if (presqueBool == 2 && SURLEPLATEAU)
+                                else if ((!matriceVerif[i, j]) && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Red;
                                     Console.Write(plateauCurseur[i, j] + " ");
@@ -317,21 +277,13 @@ namespace Scabble_JOUATEL
                         case '_':
                             if (curseurx == i && curseury == j)
                             {
-                                if (presqueBool == 0 && SURLEPLATEAU)
+                                if (matriceVerif[i, j] && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Green;
                                     Console.Write(plateauCurseur[i, j] + " ");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                 }
-                                else if (presqueBool == 1 && SURLEPLATEAU)
-                                {
-                                    Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.ForegroundColor = ConsoleColor.Black;
-                                    Console.Write(plateauCurseur[i, j] + " ");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    Console.BackgroundColor = ConsoleColor.Black;
-                                }
-                                else if (presqueBool == 2 && SURLEPLATEAU)
+                                else if ((!matriceVerif[i, j]) && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Red;
                                     Console.Write(plateauCurseur[i, j] + " ");
@@ -346,19 +298,13 @@ namespace Scabble_JOUATEL
                         default:
                             if (curseurx == i && curseury == j && SURLEPLATEAU)
                             {
-                                if (presqueBool == 0 && SURLEPLATEAU)
+                                if (matriceVerif[i, j] && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Green;
                                     Console.Write(plateauCurseur[i, j] + " ");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                 }
-                                else if (presqueBool == 1 && SURLEPLATEAU)
-                                {
-                                    Console.BackgroundColor = ConsoleColor.Yellow;
-                                    Console.Write(plateauCurseur[i, j] + " ");
-                                    Console.BackgroundColor = ConsoleColor.Black;
-                                }
-                                else if (presqueBool == 2 && SURLEPLATEAU)
+                                else if ((!matriceVerif[i, j]) && SURLEPLATEAU)
                                 {
                                     Console.BackgroundColor = ConsoleColor.Red;
                                     Console.Write(plateauCurseur[i, j] + " ");
@@ -400,7 +346,7 @@ namespace Scabble_JOUATEL
         }
 
 
-        public bool[,] verifLettresV2(char[,] plateauFactice, char[,] plateauPlacé, ref bool[,] verifPlacement)
+        public bool[,] verifLettresV2(char[,] plateauAbsolumentComplet, char[,] plateauFactice, char[,] plateauPlacé, ref bool[,] verifPlacement)
         {
             for (int i = 0; i < 15; i++)
             {
@@ -408,9 +354,9 @@ namespace Scabble_JOUATEL
                 {
                     verifPlacement[i, j] = false;
                 }
-            }
-            // Console.WriteLine(this.Plato[7, 7]);
-            if (this.Plato[7,7] == '*')
+            } // tout invalider
+
+            if (this.Plato[7,7] == '*' && plateauFactice[7,7] == '*')
             {
                 for(int i = 0; i < 15; i++)
                 {
@@ -420,10 +366,35 @@ namespace Scabble_JOUATEL
                             verifPlacement[i, j] = true;
                     }
                 }
-            }
+            } // Pour la première lettre du jeu
             else
             {
-                for(int i = 1; i < 14; i++)
+                int alignementx = -1;
+                int alignementy = -1;
+                for (int i = 0; i < 15; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        char l = plateauPlacé[i, j];
+                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                        {
+                            if(alignementx == -1 && alignementy == -1)
+                            {
+                                alignementx = i;
+                                alignementy = j;
+                            }
+                            else if(alignementx != -1 && alignementy != -1)
+                            {
+                                if (i != alignementx)
+                                    alignementx = -1;
+                                if (j != alignementy)
+                                    alignementy = -1;
+                            }
+                        }
+                    }
+                } // Vérifie l'alignement
+
+                for (int i = 1; i < 14; i++)
                 {
                     for (int j = 1; j < 14; j++)
                     {
@@ -435,8 +406,47 @@ namespace Scabble_JOUATEL
                             verifPlacement[i, j - 1] = true;
                             verifPlacement[i, j + 1] = true;
                         }
+                        l = plateauFactice[i, j];
+                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                        {
+                            verifPlacement[i - 1, j] = true;
+                            verifPlacement[i + 1, j] = true;
+                            verifPlacement[i, j - 1] = true;
+                            verifPlacement[i, j + 1] = true;
+                        }
                     }
+                } // Valide toutes les cases adjacentes à une lettre
+
+                #region debug #1
+                /*
+                for (int i = 0; i < 15; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        switch (verifPlacement[i, j])
+                        {
+                            case true:
+                                Console.BackgroundColor = ConsoleColor.Green;
+                                Console.Write(plateauPlacé[i, j] + " ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
+                            case false:
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.Write(plateauPlacé[i, j] + " ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
+                        }
+                    }
+                    Console.WriteLine();
                 }
+                Console.WriteLine();
+                Console.WriteLine(alignementx);
+                Console.WriteLine(alignementy);
+                Console.WriteLine();
+                */
+                #endregion
+
+
                 for (int i = 0; i < 15; i++)
                 {
                     for (int j = 0; j < 15; j++)
@@ -446,8 +456,153 @@ namespace Scabble_JOUATEL
                         {
                             verifPlacement[i, j] = false;
                         }
+                        l = plateauFactice[i, j];
+                        if (l != '3' && l != '2' && l != '7' && l != '8' && l != '_' && l != '*')
+                        {
+                            verifPlacement[i, j] = false;
+                        }
                     }
+                } // invalide toutes les cases non vides
+
+                #region debug #2
+                /*
+                for (int i = 0; i < 15; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        switch (verifPlacement[i, j])
+                        {
+                            case true:
+                                Console.BackgroundColor = ConsoleColor.Green;
+                                Console.Write(plateauPlacé[i, j] + " ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
+                            case false:
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.Write(plateauPlacé[i, j] + " ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
+                        }
+                    }
+                    Console.WriteLine();
                 }
+                Console.WriteLine();
+                Console.WriteLine(alignementx);
+                Console.WriteLine(alignementy);
+                Console.WriteLine();
+                */
+                #endregion
+
+
+                if (alignementx == -1 && alignementy == -1) // Si le joueur a commencé à placer des lettres
+                {
+                    // Console.WriteLine("lol");
+                }
+                else
+                {
+                    for (int i = 0; i < 15; i++)
+                    {
+                        for (int j = 0; j < 15; j++)
+                        {
+                            if (alignementx != -1 && alignementy == -1)
+                            {
+                                if (i != alignementx)
+                                    verifPlacement[i, j] = false;
+                            }
+                            if (alignementy != -1 && alignementx == -1)
+                            {
+                                if (j != alignementy)
+                                    verifPlacement[i, j] = false;
+                            }
+                            if (alignementx != 1 && alignementy != 1)
+                            {
+                                if (alignementy != j && alignementx != i)
+                                    verifPlacement[i, j] = false;
+                            }
+                            if (alignementx == -1 && alignementy == -1)
+                                Console.WriteLine("lol");
+                        }
+                    } // invalide toutes les cases non alignées
+                }
+
+
+                #region debug #3
+                /*
+                for (int i = 0; i < 15; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        switch (verifPlacement[i, j])
+                        {
+                            case true:
+                                Console.BackgroundColor = ConsoleColor.Green;
+                                Console.Write(plateauPlacé[i, j] + " ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
+                            case false:
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.Write(plateauPlacé[i, j] + " ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
+                        }
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+                Console.WriteLine(alignementx);
+                Console.WriteLine(alignementy);
+                Console.WriteLine();
+                */
+                #endregion
+
+                if (alignementx == -1 && alignementy == -1) // Si le joueur a commencé à placer des lettres
+                {
+                    // Console.WriteLine("lol");
+                }
+                else
+                {
+                    for (int i = 1; i < 14; i++)
+                    {
+                        for (int j = 1; j < 14; j++)
+                        {
+                            char L1 = plateauFactice[i - 1, j];
+                            char L2 = plateauFactice[i + 1, j];
+                            char L3 = plateauFactice[i, j - 1];
+                            char L4 = plateauFactice[i, j + 1];
+                            if (!((L1 != '3' && L1 != '2' && L1 != '7' && L1 != '8' && L1 != '_' && L1 != '*') || (L4 != '3' && L4 != '2' && L4 != '7' && L4 != '8' && L4 != '_' && L4 != '*') || (L3 != '3' && L3 != '2' && L3 != '7' && L3 != '8' && L3 != '_' && L3 != '*') || (L2 != '3' && L2 != '2' && L2 != '7' && L2 != '8' && L2 != '_' && L2 != '*')))
+                                verifPlacement[i, j] = false;
+                        }
+                    } // invalide toutes les cases trop éloignées
+                }
+                #region debug #4
+                /*
+                for (int i = 0; i < 15; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        switch (verifPlacement[i, j])
+                        {
+                            case true:
+                                Console.BackgroundColor = ConsoleColor.Green;
+                                Console.Write(plateauPlacé[i, j] + " ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
+                            case false:
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.Write(plateauPlacé[i, j] + " ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
+                        }
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+                Console.WriteLine(alignementx);
+                Console.WriteLine(alignementy);
+                Console.WriteLine();
+                */
+                #endregion
+
             }
             /*
             for(int i = 0; i < 15; i++)
@@ -463,7 +618,7 @@ namespace Scabble_JOUATEL
         }
 
 
-        
+        // ancienne fonction vérifiant les lettres, désuette
         public int LaFonctionQuiMePerdra(char[,] plateauFactice, int curseurx, int curseury, List<int> alignementReferencex, List<int> alignementReferencey, bool alignementx = false, bool alignementy = false)
         {
             char l = plateauFactice[curseurx, curseury];
@@ -482,8 +637,6 @@ namespace Scabble_JOUATEL
                     return 1;
                 else
                     return 2;
-
-
             }
 
             //retourne 0 si la lettre est plaçable, 1 si la lettre est peut-être plaçable mais pas encore et 2 Si elle n'est pas plaçable
