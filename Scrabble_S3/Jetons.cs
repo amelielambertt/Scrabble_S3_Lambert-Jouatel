@@ -8,10 +8,10 @@ namespace Scabble_JOUATEL
 {
     class Jetons
     {
-        private char lettre;
+        private char lettre; //déclaration des champs (variables)
         private int valeur;
 
-        public char Lettre
+        public char Lettre //propriétés - définition des accès en consultation
         {
             get { return this.lettre; }
         }
@@ -21,20 +21,20 @@ namespace Scabble_JOUATEL
             get { return this.valeur; }
         }
 
-        public Jetons(char lettre, int valeur)
+        public Jetons(char lettre, int valeur) //constructeur
         {
             this.lettre = lettre;
             this.valeur = valeur;
         }
 
-        public override string ToString()
+        public override string ToString() //qui retourne une chaîne de caractères qui décrit le jeton 
         {
             string leToString = "";
             leToString += this.lettre + " (" + this.valeur + ")";
             return leToString;
         }
 
-        public static int trouverLaValeur(char lettre)
+        public static int trouverLaValeur(char lettre) 
         {
             int valeur = 1;
             switch (lettre)
